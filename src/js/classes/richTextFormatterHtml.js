@@ -3,7 +3,7 @@ export const HtmlRichTextFormatter = function(app) {
   this.justInsertedAutoComplete = false;
 
   this.completableTags = Object.freeze([
-    { Start: '<<', Completion: '>>', Offset: -2 },
+    //{ Start: '<<', Completion: '>>', Offset: -2 },
     { Start: '<colo', Completion: 'r=#></color>', Offset: -9, Func: () => { app.insertColorCode(); } },
     { Start: '<b', Completion: '></b>', Offset: -4 },
     { Start: '<img', Completion: '></img>', Offset: -6 },

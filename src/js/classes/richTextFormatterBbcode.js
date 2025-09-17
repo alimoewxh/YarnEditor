@@ -5,7 +5,7 @@ export const BbcodeRichTextFormatter = function(app) {
   this.justInsertedAutoComplete = false;
 
   this.completableTags = Object.freeze([
-    { Start: '<<', Completion: '>>', Offset: -2 },
+    //{ Start: '<<', Completion: '>>', Offset: -2 },
     { Start: '[colo', Completion: 'r=#][/color]', Offset: -9, BehaviorCompletion: 'r=#][/color', Func: () => { app.insertColorCode(); } },
     { Start: '[b', Completion: '][/b]', BehaviorCompletion: '][/b', Offset: -4 },
     { Start: '[i', Completion: '][/i]', BehaviorCompletion: '][/i', Offset: -4 },
