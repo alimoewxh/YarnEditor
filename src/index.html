@@ -223,9 +223,9 @@
           <button class="bbcode-button" onclick="app.richTextFormatter.insertTag('color')" title="Color Picker">
             <svg class="icon icon-palette icon-lg icon-fw"><use xlink:href="public/icons.svg#icon-palette"></use></svg>
           </button>
-<!--          <button class="bbcode-button hide-when-narrow" onclick="app.insertEmoji()" title="Emoji">-->
-<!--            <svg class="icon icon-sweat-emoji icon-lg icon-fw"><use xlink:href="public/icons.svg#icon-sweat-emoji"></use></svg>-->
-<!--          </button>-->
+          <button class="bbcode-button hide-when-narrow" onclick="event.stopPropagation(); app.insertEmoji('expression')" title="Stickers">
+            <svg class="icon icon-sweat-emoji icon-lg icon-fw"><use xlink:href="public/icons.svg#icon-sweat-emoji"></use></svg>
+          </button>
 
           <!-- ko if:app.usingVisualStudioCodeExtension() -->
           <button class="bbcode-button" id="edit-node-in-vscode" onclick="app.editNodeInVisualStudioCodeEditor(app.editing())">🛠️ Edit in Visual Studio Code Text Editor</button>
@@ -287,8 +287,8 @@
           <input type='text' id="colorPicker" data-bind="preventBubble: 'click', preventBubble: 'mousedown'" />
         </div>
 
-        <div class="tooltip" id="emojiPicker-container">
-          <div id="emojiPickerDom"></div>
+        <div class="tooltip" id="emojiPicker-container" hidden>
+          <div id="emojiPickerDom" data-bind="preventBubble: 'click', preventBubble: 'mousedown'"></div>
         </div>
 
         <div class="editor-container" id="editorContainer">

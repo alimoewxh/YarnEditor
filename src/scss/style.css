@@ -12,6 +12,88 @@ body {
   line-height: 1.6em;
 }
 
+/* --- STICKER PICKER CSS --- */
+
+#emojiPicker-container  {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 300px;
+  max-height: 400px;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1000;
+}
+
+.sticker-picker-header {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 8px;
+}
+
+.sticker-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.sticker-category-btn {
+  background: #e9ecef;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sticker-category-btn:hover {
+  background: #dee2e6;
+}
+
+.sticker-category-btn.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.sticker-picker-body {
+  padding: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 4px;
+}
+
+.sticker-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+}
+
+.sticker-btn:hover {
+  background: #f8f9fa;
+  border-color: #dee2e6;
+  transform: scale(1.1);
+}
+
+.sticker-btn:active {
+  transform: scale(0.95);
+}
+
 h1,
 h2,
 h3,

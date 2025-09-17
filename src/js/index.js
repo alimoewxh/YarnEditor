@@ -21,7 +21,6 @@ import './libs/knockout.ace.js';
 import 'jquery.transit';
 
 import 'spectrum-colorpicker';
-import 'lightweight-emoji-picker/dist/picker.js';
 
 // Keep these imports, they are used elsewhere in the app
 import spoken from 'spoken';

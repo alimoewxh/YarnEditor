@@ -16,6 +16,7 @@ import { UI } from './ui';
 import { data } from './data';
 import { Utils } from './utils';
 import { RichTextFormatter } from './richTextFormatter';
+import { StickerPicker } from './stickerPicker';
 
 // TODO: refactoring proposals
 //
@@ -246,14 +247,27 @@ export var App = function(name, version) {
     };
 
     // TODO: move to editor
-    this.insertEmoji = function() {
-      this.emPicker.toggle();
-      self.togglePreviewMode(true);
+    this.insertEmoji = function(category) {
+      console.log('insertEmoji called with category:', category);
+      console.log('stickerPicker:', this.stickerPicker);
+      
+      // Position the container
       $('#emojiPicker-container').css({
         left: self.input.mouse.x - 200,
         top: self.input.mouse.y - 125,
       });
+      
       $('#emojiPicker-container').show();
+      // Show the sticker picker (this will add the 'show' class)
+      this.stickerPicker.show(category);
+      
+      console.log('Container classes after show:', $('#emojiPicker-container')[0].className);
+      console.log('Container computed display Before Toggle:', window.getComputedStyle($('#emojiPicker-container')[0]).display);
+      console.log('Container visibility:', $('#emojiPicker-container').is(':visible'));
+      
+      self.togglePreviewMode(true);
+
+      console.log('Container computed display After Toggle:', window.getComputedStyle($('#emojiPicker-container')[0]).display);
     };
 
     // TODO: move to editor
@@ -815,12 +829,11 @@ export var App = function(name, version) {
       }
     });
 
-    /// init emoji picker
-    this.emPicker = new EmojiPicker(
+    /// init sticker picker
+    this.stickerPicker = new StickerPicker(
       document.getElementById('emojiPickerDom'),
-      emoji => {
-        self.insertTextAtCursor(emoji.char);
-        this.emPicker.toggle();
+      sticker => {
+        self.insertTextAtCursor(sticker);
         self.togglePreviewMode(false);
       }
     );
