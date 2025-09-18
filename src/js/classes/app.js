@@ -250,7 +250,7 @@ export var App = function(name, version) {
     {
       // Position the container
       $('#playerPicker-container').css({
-        left: self.input.mouse.x - 200,
+        left: self.input.mouse.x ,
         top: self.input.mouse.y - 125,
       });
       $('#playerPicker-container').show();
