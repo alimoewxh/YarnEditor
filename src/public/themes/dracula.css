@@ -640,6 +640,10 @@ div#emojiPicker-container {
   opacity: 1 !important;
 }
 
+div#playerPicker-container {
+  opacity: 1 !important;
+}
+
 .emojipicker-container {
   background: #44475a;
 }

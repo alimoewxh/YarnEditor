@@ -26,6 +26,18 @@ body {
   z-index: 1000;
 }
 
+#playerPicker-container  {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 300px;
+  max-height: 400px;
+  overflow: hidden;
+  position: absolute;
+  z-index: 1000;
+}
+
 .sticker-picker-header {
   background: #f8f9fa;
   border-bottom: 1px solid #e9ecef;
@@ -93,6 +105,38 @@ body {
 .sticker-btn:active {
   transform: scale(0.95);
 }
+
+
+.player-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 4px;
+}
+
+.player-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.player-btn:hover {
+  background: #f8f9fa;
+  border-color: #dee2e6;
+  transform: scale(1.1);
+}
+
+.player-btn:active {
+  transform: scale(0.95);
+}
+
 
 h1,
 h2,

@@ -85,7 +85,7 @@ export const Settings = function(app) {
     .observable(
       storage.getItem('spellcheckEnabled') !== null
         ? storage.getItem('spellcheckEnabled') === 'true'
-        : true
+        : false
     )
     .extend({ persist: 'spellcheckEnabled' });
 
@@ -94,7 +94,7 @@ export const Settings = function(app) {
     .observable(
       storage.getItem('autoCloseTags') !== null
         ? storage.getItem('autoCloseTags') === 'true'
-        : true
+        : false
     )
     .extend({ persist: 'autoCloseTags' });
 
@@ -103,7 +103,7 @@ export const Settings = function(app) {
     .observable(
       storage.getItem('autocompleteSuggestionsEnabled') !== null
         ? storage.getItem('autocompleteSuggestionsEnabled') === 'true'
-        : true
+        : false
     )
     .extend({ persist: 'autocompleteSuggestionsEnabled' });
 
@@ -112,7 +112,7 @@ export const Settings = function(app) {
     .observable(
       storage.getItem('autoCloseBrackets') !== null
         ? storage.getItem('autoCloseBrackets') === 'true'
-        : true
+        : false
     )
     .extend({ persist: 'autoCloseBrackets' });
 

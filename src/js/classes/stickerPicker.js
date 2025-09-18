@@ -182,13 +182,9 @@ export class StickerPicker {
     this.hide();
   }
   
-  show(category) {
+  show() {
     if (this.container && !this.isVisible) {
-      console.log('Showing sticker picker');
-      console.log('Container element:', this.container);
-      console.log('Container display before:', this.container.style.display);
-      if (category && this.stickerCategories[category]) {
-        this.currentCategory = category;
+      if (this.stickerCategories[this.currentCategory]) {
         const stickerGrid = this.container.querySelector('#stickerGrid');
         if (stickerGrid) {
           stickerGrid.innerHTML = this.renderStickers();
@@ -200,19 +196,8 @@ export class StickerPicker {
           this.createHTML();
         }
       }
-
       this.container.style.display = 'block';
       this.isVisible = true;
-      
-      console.log('Container display after:', this.container.style.display);
-      console.log('Container computed display:', window.getComputedStyle(this.container).display);
-      
-      // Check if the sticker-picker element exists
-      const stickerElement = this.container.querySelector('.sticker-picker');
-      console.log('Sticker element found:', !!stickerElement);
-      if (stickerElement) {
-        console.log('Sticker element display:', window.getComputedStyle(stickerElement).display);
-      }
       document.addEventListener('click', this.outsideClickHandler);
     } else {
       console.log('Container not found');
@@ -220,7 +205,6 @@ export class StickerPicker {
   }
   
   hide() {
-    console.log('Hiden sticker picker');
     if (this.container && this.isVisible) {
       this.container.style.display = 'none';
       this.isVisible = false;

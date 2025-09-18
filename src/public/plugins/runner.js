@@ -175,6 +175,7 @@ export var Runner = function({
   onYarnSavedNode(() => self.togglePlayMode(false));
 
   onYarnEditorOpen(() => {
+    /*
     createButton(self.name, {
       iconName: 'play',
       title: 'Preview',
@@ -183,7 +184,7 @@ export var Runner = function({
       className: 'bbcode-button bbcode-button-right',
       id: 'storyPlayButton',
     });
-
+    */
     const element = document.createElement('div');
     element.innerHTML = `
       <div class="editor-play" id="editor-play" onpointerdown="app.plugins.${self.name}.advanceStoryPlayMode(30)" ondblclick="app.plugins.${self.name}.advanceStoryPlayMode()">

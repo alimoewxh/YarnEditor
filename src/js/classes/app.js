@@ -17,7 +17,7 @@ import { data } from './data';
 import { Utils } from './utils';
 import { RichTextFormatter } from './richTextFormatter';
 import { StickerPicker } from './stickerPicker';
-
+import { PlayerPicker } from './playerPicker';
 // TODO: refactoring proposals
 //
 // Create Platform class: provides platform specific info and abstractions
@@ -246,28 +246,29 @@ export var App = function(name, version) {
       }
     };
 
-    // TODO: move to editor
-    this.insertEmoji = function(category) {
-      console.log('insertEmoji called with category:', category);
-      console.log('stickerPicker:', this.stickerPicker);
-      
+    this.insertPlayer = function()
+    {
+      // Position the container
+      $('#playerPicker-container').css({
+        left: self.input.mouse.x - 200,
+        top: self.input.mouse.y - 125,
+      });
+      $('#playerPicker-container').show();
+      this.playerPicker.show();
+      // Show the player picker (this will add the 'show' class)
+      self.togglePreviewMode(true);
+    }
+    
+    this.insertEmoji = function() {
       // Position the container
       $('#emojiPicker-container').css({
         left: self.input.mouse.x - 200,
         top: self.input.mouse.y - 125,
       });
-      
       $('#emojiPicker-container').show();
       // Show the sticker picker (this will add the 'show' class)
-      this.stickerPicker.show(category);
-      
-      console.log('Container classes after show:', $('#emojiPicker-container')[0].className);
-      console.log('Container computed display Before Toggle:', window.getComputedStyle($('#emojiPicker-container')[0]).display);
-      console.log('Container visibility:', $('#emojiPicker-container').is(':visible'));
-      
+      this.stickerPicker.show();
       self.togglePreviewMode(true);
-
-      console.log('Container computed display After Toggle:', window.getComputedStyle($('#emojiPicker-container')[0]).display);
     };
 
     // TODO: move to editor
@@ -290,6 +291,30 @@ export var App = function(name, version) {
         self.applyPickerColorEditor(currentColor);
       }, 100);
     };
+
+    this.insertOption = function()
+    {
+      if (!self.editing()) return;
+
+      // 获取光标所在行号
+      const pos = self.editor.getCursorPosition();
+      const row = pos.row;
+
+      // 获取当前行文本
+      const lineText = self.editor.session.getLine(row);
+
+      // 从行首开始，查找第一个非空白字符（非空格、制表符）
+      let i = 0;
+      while (i < lineText.length && (lineText[i] === ' ' || lineText[i] === '\t')) {
+          i++;
+      }
+
+      // 如果找到了非空白字符
+      const insertPosition = new ace.Range(row, i, row, i);
+      self.editor.session.replace(insertPosition, "->");
+
+      self.updateEditorStats();
+    }
 
     // TODO: move to editor
     this.applyPickerColorEditor = function(color) {
@@ -837,9 +862,15 @@ export var App = function(name, version) {
         self.togglePreviewMode(false);
       }
     );
-
+    this.playerPicker = new PlayerPicker(
+      document.getElementById('playerPickerDom'),
+      player => {
+        self.insertTextAtLineFront(player);
+        self.togglePreviewMode(false);
+      }
+    );
     /// init spell check
-    enable_spellcheck();
+    //enable_spellcheck();
     self.toggleInvertColors();
     self.toggleShowCounter();
     self.toggleSpellCheck();
@@ -1192,6 +1223,9 @@ export var App = function(name, version) {
       if ($('#emojiPicker-container').is(':visible')) {
         $('#emojiPicker-container').hide();
       }
+      if ($('#playerPicker-container').is(':visible')) {
+        $('#playerPicker-container').hide();
+      }
     }
   };
 
@@ -1225,6 +1259,58 @@ export var App = function(name, version) {
     }
     self.updateEditorStats();
   };
+
+  this.insertTextAtLineFront = function(textToInsert, scrollToLine = false) {
+    if (!self.editing()) return;
+
+    const pos = self.editor.getCursorPosition();
+    const row = pos.row;
+
+    // 获取当前行文本
+    const lineText = self.editor.session.getLine(row);
+
+    // 查找第一个 "->" 的位置
+    let insertCol = lineText.indexOf("->");
+    if (insertCol === -1){
+      const match = lineText.match(/\s+$/); // 查找最后的连续空白字符
+      let insertPosition;
+      if (match) {
+          // 如果找到了空白字符，插入的位置就在空白字符后
+          const lastWhitespaceIndex = match.index + match[0].length;
+          insertCol = lastWhitespaceIndex;
+      } else {
+          // 如果没有找到空白字符，插入到行首
+          insertCol = 0;
+      }
+    }
+    else
+      insertCol += 2; // 插入到 "->" 后面
+
+    // 查找最后一个 ": " 的位置
+    const lastColonIndex = lineText.lastIndexOf(": ");
+    let range;
+
+    const Range = ace.require('ace/range').Range;
+
+    if (lastColonIndex !== -1 && lastColonIndex > insertCol) {
+        // 替换 "->" 和最后一个 ": " 之间的文字
+        range = new Range(row, insertCol, row, lastColonIndex + 2);
+    } else {
+        // 没有找到 ": "，则从 "->" 后面插入文本
+        range = new Range(row, insertCol, row, insertCol);
+    }
+
+    // 替换文本
+    self.editor.session.replace(range, textToInsert);
+
+    // 可选滚动
+    if (scrollToLine) {
+        self.editor.scrollToLine(row, true, true, function() {});
+        self.editor.focus();
+    }
+
+    self.updateEditorStats();
+};
 
   // TODO: move to editor class
   this.getTagBeforeCursor = function() {
